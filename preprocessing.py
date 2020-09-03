@@ -7,12 +7,16 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def preprocess(db_path, num_imgs=1000): 
+def lazy_preprocess(file_paths):
+    for index, file_path in enumerate(file_paths):
+        img = process_image(file_path)
+        yield img
+
+
+def multi_preprocess(file_paths): 
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        file_names = random.sample(os.listdir(db_path), num_imgs)
-        file_paths = list(map(lambda f: db_path + f, file_names))
         imgs = list(executor.map(process_image, file_paths)) 
-        return file_names, imgs
+        return imgs
 
 
 def process_image(file_path, cropped=True, scaled=True, mapped=False):
