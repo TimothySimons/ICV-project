@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 import visualise
 
-def fast_query(feature_vector, kd_tree, num_matches=10):
+def fast_query(feature_vector, kd_tree, num_matches=12):
     _, wavelet_vectors = feature_vector
     vector = np.asarray(wavelet_vectors).flatten()
     dists, indices = kd_tree.query(vector, num_matches)
@@ -24,8 +24,7 @@ def slow_query(feature_vector, db_feature_vectors, num_matches=10, std_thresh=50
     return sorted(closest, key = lambda x: x[1])[:num_matches]
 
 
-def init_kd_tree(db_imgs, level):
-    feature_vectors = init_feature_vectors(db_imgs, level)
+def init_kd_tree(feature_vectors):
     data = []
     for _, wavelet_vectors in feature_vectors:
         data.append(np.asarray(wavelet_vectors).flatten()) 
@@ -33,9 +32,11 @@ def init_kd_tree(db_imgs, level):
 
 
 def init_feature_vectors(db_imgs, level):
+    feature_vectors = []
     for db_img in db_imgs:
         feature_vector = construct_feature_vector(db_img, level)
-        yield feature_vector
+        feature_vectors.append(feature_vector)
+    return feature_vectors
 
 
 def construct_feature_vector(img, level):
