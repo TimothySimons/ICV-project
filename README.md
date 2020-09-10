@@ -14,6 +14,6 @@ As an aside, for best performance, crop and resize your dataset prior to running
 
 To run the application:
 ```
-python gui <db-folder>
+python gui.py <db-folder>
 ``` 
 Here, `<db-folder>` is the relative path to the database containing the application _display_ images. This folder is different from the folder selected in the GUI if the user has preprocessed the images prior to application execution. The folder selected in the GUI contains the preprocessed images and the one passed in as a command line argument contains higher resolution versions of those same images (with the same file names). 
