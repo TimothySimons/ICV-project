@@ -42,7 +42,7 @@ def fast_query(feature_vector, kd_tree, num_matches=10):
     """Queries a kd-tree for the nearest neighbours of a feature vector"""
     _, vector = feature_vector
     dists, indices = kd_tree.query(vector, num_matches)
-    return zip(indices, dists)
+    return list(zip(indices, dists))
 
 
 @timer

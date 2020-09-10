@@ -9,6 +9,7 @@ import gc
 import io
 import os.path
 import random
+import sys
 
 import cv2
 import matplotlib
@@ -167,7 +168,7 @@ def save_images(window, event, values, params):
         orig_path = os.path.join(orig_db_folder, file_names[i])
         save_path = os.path.join(save_folder, file_names[i])
         orig_img = cv2.imread(orig_path, cv2.IMREAD_COLOR)
-        cv2.imwrite(save_path, orig_img)
+        successful = cv2.imwrite(save_path, orig_img)
 
 
 def get_img_data(img, maxsize=(345,345), first=False):
@@ -296,8 +297,9 @@ def get_layout():
 
 
 if __name__ == '__main__':
+    orig_db_folder = sys.argv[1]
+    print(orig_db_folder)
     layout = get_layout()
     window = sg.Window('WBIIS Viewer', layout).Finalize()
     window.Maximize()
-    orig_db_folder = 'resources/db/'
     event_loop(window, orig_db_folder)
